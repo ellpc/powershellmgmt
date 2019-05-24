@@ -1,0 +1,13 @@
+#take all the files listed in a csv file, find them, match names, then rename it with the corresponding name. 
+
+$csv = Import-Csv "C:\renames.csv"
+foreach ($file in $csv) {
+    write-host $file.source
+    if(test-path -IsValid $file.source)  {
+      write-host "FOUND"
+      Rename-Item -NewName $file.NewName -LiteralPath $file.source | Out-File c:\scripts\CSV_VDriveRenameLog.txt -width 120
+    } 
+    else {
+      write-host "Not Found - No Change"
+    }
+}
