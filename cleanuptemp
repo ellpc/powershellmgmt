@@ -1,0 +1,9 @@
+#This will clean up all the temp files. Have to use this with a few specific applications from time to time.
+
+Write-Host "This will clean up $env:USERNAME s' temp files. Proceed? Type y or n."
+$ans = Read-Host 
+if($ans -eq "y"){
+    $destination = "C:\Users\$env:USERNAME\AppData\Local\Temp" 
+    Remove-Item $destination -recurse -WhatIf
+}
+if($ans -eq "n") { write-host "Cancelling."}
