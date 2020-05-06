@@ -1,3 +1,4 @@
+#Credit to https://vladtalkstech.com/2018/11/office-365-profile-completeness-finding-users-with-no-birthday-set-in-the-user-profile.html
 $cred = get-Credential
 Connect-AzureAD -Credential $cred
 Connect-PnpOnline -Url https://serverNAME.sharepoint.com/ -Credentials $cred
@@ -17,4 +18,4 @@ foreach ($user in $Users)
         }
 }
 $NoBirthdayUsers | Select DisplayName, UserPrincipalName | Export-Csv -Path "C:\O365Reports\UsersWithNoBirthday.csv" -NoTypeInformation
-#Credit to https://vladtalkstech.com/2018/11/office-365-profile-completeness-finding-users-with-no-birthday-set-in-the-user-profile.html
+
