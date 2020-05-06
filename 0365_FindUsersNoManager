@@ -1,0 +1,16 @@
+#credit to https://vladtalkstech.com/2018/11/office-365-profile-completeness-finding-users-with-no-manager-set-in-the-user-profile.html
+$cred = get-Credential
+Connect-AzureAD -Credential $cred
+
+$Users = Get-AzureADUser -All $True | Where {$_.UserType -eq 'Member' -and $_.AssignedLicenses -ne $null}
+$NoManagerUsers = @()
+
+foreach ($user in $Users) 
+{
+    $Manager = Get-AzureADUserManager -ObjectId $user.UserPrincipalName
+    if ($Manager -eq $null)
+    {
+        $NoManagerUsers += $user
+    }
+}
+$NoManagerUsers | Select DisplayName, UserPrincipalName | Export-Csv -Path "C:\O365Reports\UsersWithNoManager.csv" -NoTypeInformation
